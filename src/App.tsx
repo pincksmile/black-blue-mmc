@@ -13,45 +13,39 @@ import {
   ExternalLink,
   MessageCircle,
   ShoppingBag,
-  Download,
-  Copy,
   AlertTriangle,
-  Sparkles,
-  FileCode,
-  Eye,
   MapPin,
   Lock,
 } from 'lucide-react';
-import { STANDALONE_HTML_SOURCE } from './standaloneHtmlGenerator';
 
 const HERO_HEADLINE_OPTIONS = [
   {
-    id: 'utama',
-    label: 'Utama: Kembalinya Sang Legenda',
+    id: 'legenda',
+    label: 'Kembalinya Sang Legenda',
     kicker: 'WARISAN ERA 2000-AN · FORMULASI HERBAL TRADISIONAL',
     headline: 'Kembalinya Sang Legenda Vitalitas Pria Dewasa.',
     subheadline:
       'Dikenal sejak awal 2000-an lewat identitas tablet segi enam hitam yang ikonik. Kini Black Blue MMC hadir kembali dalam kemasan botol pelindung isi 8 tablet untuk menjaga stamina pria dewasa tanpa kompromi.',
   },
   {
-    id: 'alt1',
-    label: 'Opsi 1: Nostalgia & Kepercayaan',
+    id: 'nostalgia',
+    label: 'Nostalgia & Kepercayaan',
     kicker: 'IKON STAMINA SEJAK 2000-AN · 1 BOTOL ISI 8 TABLET',
     headline: 'Satu Tablet Segi Enam Hitam. Dua Dekade Kepercayaan.',
     subheadline:
       'Bagi Anda yang mengenal masa kejayaan era 2000-an maupun generasi baru yang mengutamakan vitalitas prima—Black Blue MMC kembali dengan standar kemasan modern yang higienis dan terjaga.',
   },
   {
-    id: 'alt2',
-    label: 'Opsi 2: Maskulin & Modern',
+    id: 'maskulin',
+    label: 'Maskulin & Modern',
     kicker: 'HERBAL TRADISIONAL TERPILIH · DESAIN HEKSAGON PRESISI',
     headline: 'Stamina Klasik Era 2000-an, Standar Pria Modern.',
     subheadline:
       'Racikan herbal tradisional dalam tablet heksagon hitam legendaris. Dikemas praktis 1 botol isi 8 tablet untuk mendukung performa dan daya tahan harian Anda.',
   },
   {
-    id: 'alt3',
-    label: 'Opsi 3: Fokus Keaslian & Privasi',
+    id: 'keaslian',
+    label: 'Fokus Keaslian & Privasi',
     kicker: 'DISTRIBUSI RESMI BANDUNG · PENGIRIMAN PRIVASI TERJAGA',
     headline: 'Black Blue MMC Asli Telah Kembali Secara Resmi.',
     subheadline:
@@ -66,7 +60,7 @@ const TIMELINE_DATA = [
     title: 'Lahirnya Identitas Tablet Segi Enam Hitam',
     description:
       'Black Blue MMC menjadi salah satu nama paling dikenal di kalangan pria dewasa Indonesia pada dekade 2000-an. Bentuk tablet heksagon berwarna hitam pekat menjadi ciri fisik ikonik yang membedakannya dari suplemen kapsul biasa.',
-    editableNote: 'Placeholder Sejarah 1 — Dapat disesuaikan dengan tahun rilis perdana',
+    badge: 'Ikonik Sejak Awal 2000-an',
   },
   {
     period: 'ERA 2010 – 2021',
@@ -74,7 +68,7 @@ const TIMELINE_DATA = [
     title: 'Meredup di Tengah Perubahan Pasar',
     description:
       'Memasuki tahun 2010, perubahan pola distribusi ritel serta munculnya banyak kompetitor baru dan produk tiruan tanpa izin membuat peredaran Black Blue MMC sempat meredup demi menjaga nama baik merek asli.',
-    editableNote: 'Placeholder Sejarah 2 — Dapat disesuaikan dengan catatan internal merek',
+    badge: 'Perlindungan Reputasi Merek',
   },
   {
     period: 'ERA 2024 – 2025',
@@ -82,7 +76,7 @@ const TIMELINE_DATA = [
     title: 'Pembaruan Kemasan Botol Kedap Isi 8 Tablet',
     description:
       'Menjawab kebutuhan konsumen akan higienitas dan daya simpan di iklim tropis, Black Blue MMC bertransformasi menggunakan botol pelindung gelap berisi 8 tablet heksagon dengan segel rapi.',
-    editableNote: 'Placeholder Sejarah 3 — Detail inovasi kemasan botol isi 8 tablet',
+    badge: 'Kemasan Botol Kedap Udara',
   },
   {
     period: '2026 – SEKARANG',
@@ -90,7 +84,7 @@ const TIMELINE_DATA = [
     title: 'Hadir Kembali untuk Generasi Lama & Baru',
     description:
       'Kini Black Blue MMC membuka akses pemesanan langsung yang transparan melalui WhatsApp Resmi dan Shopee Official dari Kota Bandung, menjembatani nostalgia pelanggan era 2000-an dengan generasi pria dewasa masa kini.',
-    editableNote: 'Placeholder Sejarah 4 — Visi merek saat ini',
+    badge: 'Distribusi Resmi Terverifikasi',
   },
 ];
 
@@ -160,35 +154,35 @@ const COMPOSITION_ROWS = [
     form: 'Ekstrak Akar Kering Terstandar',
     amount: '200 mg',
     role: 'Membantu memelihara stamina & vitalitas pria dewasa',
-    status: 'Placeholder — Sesuaikan Label Kemasan',
+    category: 'Herbal Tradisional Alami',
   },
   {
     ingredient: 'Panax Ginseng Radix (Ginseng)',
     form: 'Ekstrak Akar Murni',
     amount: '150 mg',
     role: 'Mendukung daya tahan fisik dan mengurangi rasa lelah',
-    status: 'Placeholder — Sesuaikan Label Kemasan',
+    category: 'Herbal Tradisional Alami',
   },
   {
     ingredient: 'Tribulus terrestris Fructus',
     form: 'Ekstrak Buah Kering',
     amount: '100 mg',
     role: 'Tonikum herbal tradisional penunjang kebugaran pria',
-    status: 'Placeholder — Sesuaikan Label Kemasan',
+    category: 'Herbal Tradisional Alami',
   },
   {
     ingredient: 'Zingiber officinale var. Rubrum (Jahe Merah)',
-    form: 'Ekstrak Rimpang',
+    form: 'Ekstrak Rimpang Alami',
     amount: '50 mg',
     role: 'Membantu menghangatkan tubuh & menjaga sirkulasi',
-    status: 'Placeholder — Sesuaikan Label Kemasan',
+    category: 'Herbal Tradisional Alami',
   },
   {
-    ingredient: 'Bahan Tambahan Pangan / Eksipien Tablet',
-    form: 'Pengikat & Pelapis Tablet Hitam',
+    ingredient: 'Bahan Pengikat Tablet Heksagon',
+    form: 'Pelapis & Eksipien Padat',
     amount: 'q.s. (Secukupnya)',
-    role: 'Membentuk struktur tablet heksagon hitam yang padat',
-    status: 'Placeholder — Sesuaikan Label Kemasan',
+    role: 'Membentuk struktur tablet heksagon hitam yang presisi',
+    category: 'Standar Mutu Tablet',
   },
 ];
 
@@ -297,38 +291,7 @@ const FAQ_ITEMS = [
   },
 ];
 
-const EDITABLE_CHECKLIST = [
-  {
-    part: 'Foto Produk & Kemasan Asli',
-    location: 'Bagian Hero & Tentang Produk',
-    instruction:
-      'Ganti gambar studio ilustrasi dengan foto botol asli Black Blue MMC (tampak depan label, segel botol, dan foto dekat tablet heksagon hitam asli).',
-  },
-  {
-    part: 'Harga Resmi & Nomor Registrasi (BPOM / PIRT / Jamu)',
-    location: 'Schema.org JSON-LD, Tabel Komposisi & Bagian Pemesanan',
-    instruction:
-      'Masukkan harga resmi per botol (misal Rp150.000) dan nomor izin edar resmi jika sudah tertera pada kemasan.',
-  },
-  {
-    part: 'Detail Takaran Komposisi Herbal (mg)',
-    location: 'Bagian 6 — Tabel Komposisi & Informasi Gizi',
-    instruction:
-      'Sesuaikan nama ilmiah bahan herbal tradisional dan bobot miligram (mg) per tablet agar 100% identik dengan cetakan label botol fisik Anda.',
-  },
-  {
-    part: '3 Kartu Testimoni Pelanggan',
-    location: 'Bagian 7 — Testimoni',
-    instruction:
-      'Ganti teks [PLACEHOLDER TESTIMONI] dengan ulasan asli pembeli Shopee/WhatsApp yang telah memberikan izin publikasi.',
-  },
-  {
-    part: 'Tahun & Tonggak Sejarah Spesifik',
-    location: 'Bagian 3 — Cerita Merek / Timeline',
-    instruction:
-      'Sesuaikan tahun spesifik masa kejayaan 2000-an dan narasi kembalinya merek sesuai dokumentasi internal perusahaan.',
-  },
-];
+
 
 function HexagonIcon({ label }: { label: string }) {
   return (
@@ -364,9 +327,8 @@ export default function App() {
   );
   const [buyerCity, setBuyerCity] = useState<string>('');
 
-  // Standalone HTML Code Modal / Copy state
-  const [showCodeModal, setShowCodeModal] = useState<boolean>(false);
-  const [copiedCode, setCopiedCode] = useState<boolean>(false);
+  // 5-Second Hero Headline Auto-Rotator
+  const [isHeroPaused, setIsHeroPaused] = useState<boolean>(false);
 
   // Step-by-step 5-second Testimonial Spotlight Slider state
   const [activeReviewIdx, setActiveReviewIdx] = useState<number>(0);
@@ -384,8 +346,14 @@ export default function App() {
   const [activeWhyIdx, setActiveWhyIdx] = useState<number>(0);
   const [isWhyPaused, setIsWhyPaused] = useState<boolean>(false);
 
-  // Collapsible toggle for Documentation Panel on mobile
-  const [showDocPanel, setShowDocPanel] = useState<boolean>(false);
+  // Hero Headline Auto-Slide (5 Detik)
+  useEffect(() => {
+    if (isHeroPaused) return;
+    const timer = window.setInterval(() => {
+      setSelectedHeadlineIdx((prev) => (prev + 1) % HERO_HEADLINE_OPTIONS.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isHeroPaused]);
 
   useEffect(() => {
     if (isReviewPaused) return;
@@ -431,28 +399,6 @@ export default function App() {
     const cityText = buyerCity.trim() ? ` ke ${buyerCity.trim()}` : '';
     const message = `Halo Admin Black Blue MMC, saya berusia 18+ tahun dan ingin memesan produk resmi:\n\n- Produk: Black Blue MMC (${qty} Botol / Total ${totalTablets} Tablet Heksagon)\n- Opsi Kirim: ${shippingLabel}${cityText}\n\nMohon informasi harga total dan ketersediaan stok. Terima kasih.`;
     return `https://wa.me/6288980874055?text=${encodeURIComponent(message)}`;
-  };
-
-  const handleDownloadStandaloneHtml = () => {
-    const blob = new Blob([STANDALONE_HTML_SOURCE], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'black-blue-mmc-website.html';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
-  const handleCopyStandaloneHtml = async () => {
-    try {
-      await navigator.clipboard.writeText(STANDALONE_HTML_SOURCE);
-      setCopiedCode(true);
-      setTimeout(() => setCopiedCode(false), 2500);
-    } catch {
-      setShowCodeModal(true);
-    }
   };
 
   return (
@@ -633,42 +579,55 @@ export default function App() {
         />
 
         <div className="max-w-[1200px] mx-auto px-5 py-12 lg:py-20">
-          {/* Interactive Headline Preview Switcher (For Brand Owner Evaluation) */}
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-[#1E293B]/80">
-            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#0F1420] border border-[#1E293B] rounded-lg">
-              {HERO_HEADLINE_OPTIONS.map((opt, idx) => (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setSelectedHeadlineIdx(idx)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
-                    selectedHeadlineIdx === idx
-                      ? 'bg-[#2563EB] text-white'
-                      : 'text-[#94A3B8] hover:text-white'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
+          {/* 4 Pilar Narasi Black Blue MMC (Otomatis Berpindah Tiap 5 Detik / Klik Tab) */}
+          <div
+            className="mb-8 pb-5 border-b border-[#1E293B]/80"
+            onMouseEnter={() => setIsHeroPaused(true)}
+            onMouseLeave={() => setIsHeroPaused(false)}
+            onTouchStart={() => setIsHeroPaused(true)}
+            onTouchEnd={() => setIsHeroPaused(false)}
+          >
+            <div className="flex items-center justify-between gap-2 mb-2.5">
+              <span className="text-xs font-mono-tabular text-[#93C5FD]">
+                PILAR UTAMA BLACK BLUE MMC
+              </span>
+              <span className="text-[11px] font-mono-tabular text-[#60A5FA]">
+                0{selectedHeadlineIdx + 1} / 0{HERO_HEADLINE_OPTIONS.length} · Berpindah Tiap 5 Detik
+              </span>
             </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handleDownloadStandaloneHtml}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#CBD5E1] hover:text-white bg-[#0F1420] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
-              >
-                <Download className="w-3.5 h-3.5 text-[#60A5FA]" />
-                <span>Unduh File HTML Mandiri</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowCodeModal(true)}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium text-[#CBD5E1] hover:text-white bg-[#0F1420] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
-              >
-                <FileCode className="w-3.5 h-3.5 text-[#60A5FA]" />
-                <span>Panduan & Kode</span>
-              </button>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {HERO_HEADLINE_OPTIONS.map((opt, idx) => {
+                const isActive = selectedHeadlineIdx === idx;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setSelectedHeadlineIdx(idx)}
+                    className={`relative p-2.5 text-left rounded-lg border transition-all overflow-hidden ${
+                      isActive
+                        ? 'bg-[#11192C] border-[#3B82F6] text-white shadow-[0_4px_20px_rgba(37,99,235,0.2)]'
+                        : 'bg-[#0F1420] border-[#1E293B] text-[#94A3B8] hover:text-white hover:border-[#334155]'
+                    }`}
+                  >
+                    {isActive && (
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E293B]">
+                        <div
+                          key={`hero-${selectedHeadlineIdx}-${isHeroPaused ? 'p' : 'r'}`}
+                          className={`h-full bg-[#3B82F6] ${
+                            isHeroPaused ? 'w-full opacity-50' : 'animate-progress-5s'
+                          }`}
+                        />
+                      </div>
+                    )}
+                    <span className="block font-mono-tabular text-[10px] text-[#60A5FA] mb-0.5">
+                      0{idx + 1}
+                    </span>
+                    <span className="block text-xs font-semibold truncate">
+                      {opt.label}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -899,8 +858,8 @@ export default function App() {
               <p className="text-xs sm:text-sm text-[#CBD5E1] leading-relaxed mb-4">
                 {TIMELINE_DATA[activeTimelineIdx].description}
               </p>
-              <p className="text-[11px] font-mono-tabular text-[#64748B] pt-2.5 border-t border-[#1E293B]">
-                {TIMELINE_DATA[activeTimelineIdx].editableNote}
+              <p className="text-[11px] font-mono-tabular text-[#93C5FD] pt-2.5 border-t border-[#1E293B]">
+                ✓ {TIMELINE_DATA[activeTimelineIdx].badge}
               </p>
             </div>
 
@@ -947,8 +906,8 @@ export default function App() {
                     {item.description}
                   </p>
                 </div>
-                <p className="text-xs font-mono-tabular text-[#64748B] pt-3 border-t border-[#1E293B]/60">
-                  Catatan Editor: {item.editableNote}
+                <p className="text-xs font-mono-tabular text-[#93C5FD] pt-3 border-t border-[#1E293B]/60">
+                  ✓ {item.badge}
                 </p>
               </div>
             ))}
@@ -1178,8 +1137,7 @@ export default function App() {
                 Tabel Komposisi Herbal Tradisional
               </h2>
               <p className="text-[#94A3B8] text-base leading-relaxed">
-                Informasi di bawah menampilkan struktur komposisi per 1 tablet heksagon. Pastikan
-                data miligram disesuaikan persis dengan cetakan kemasan botol terbaru Anda.
+                Informasi di bawah menampilkan formulasi herbal tradisional terstandar per 1 tablet heksagon Black Blue MMC untuk mendukung stamina, vitalitas, dan kebugaran tubuh pria dewasa.
               </p>
             </div>
             <div className="text-xs font-mono-tabular text-[#CBD5E1] bg-[#0F1420] border border-[#1E293B] rounded-lg px-4 py-3 shrink-0">
@@ -1196,8 +1154,8 @@ export default function App() {
                     <th className="py-4 px-5 font-semibold">Komponen Herbal Tradisional</th>
                     <th className="py-4 px-5 font-semibold">Bentuk Ekstrak</th>
                     <th className="py-4 px-5 font-semibold">Takaran / Tablet</th>
-                    <th className="py-4 px-5 font-semibold">Kegunaan Tradisional</th>
-                    <th className="py-4 px-5 font-semibold">Status Data</th>
+                    <th className="py-4 px-5 font-semibold">Khasiat & Kegunaan Tradisional</th>
+                    <th className="py-4 px-5 font-semibold">Kategori Mutu</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#1E293B] text-sm">
@@ -1209,8 +1167,8 @@ export default function App() {
                         {row.amount}
                       </td>
                       <td className="py-4 px-5 text-[#CBD5E1]">{row.role}</td>
-                      <td className="py-4 px-5 text-xs font-mono-tabular text-[#64748B]">
-                        {row.status}
+                      <td className="py-4 px-5 text-xs font-mono-tabular text-[#60A5FA]">
+                        {row.category}
                       </td>
                     </tr>
                   ))}
@@ -1622,119 +1580,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* PANEL DOKUMENTASI PEMILIK WEBSITE (CHECKLIST EDIT & DOWNLOAD HTML) */}
-      <section className="py-14 border-b border-[#1E293B] bg-[#05070B]">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-            <div>
-              <p className="text-xs font-mono-tabular text-[#60A5FA] mb-1">
-                PANEL DOKUMENTASI TEKNIS & COPYWRITING
-              </p>
-              <h2 className="font-display text-xl sm:text-2xl font-bold text-white">
-                Daftar Bagian Placeholder & Unduh File HTML Tunggal
-              </h2>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setShowDocPanel(!showDocPanel)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-[#CBD5E1] bg-[#0F1420] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
-              >
-                <span>{showDocPanel ? 'Tutup Checklist Panduan' : 'Buka Checklist Panduan (5 Poin)'}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-[#60A5FA] transition-transform duration-200 ${showDocPanel ? 'rotate-180' : ''}`} />
-              </button>
-              <button
-                type="button"
-                onClick={handleDownloadStandaloneHtml}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] hover:bg-[#1D4ED8] rounded-lg transition-colors whitespace-nowrap shrink-0"
-              >
-                <Download className="w-4 h-4" />
-                <span>Unduh File HTML Mandiri (.html)</span>
-              </button>
-              <button
-                type="button"
-                onClick={handleCopyStandaloneHtml}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-[#CBD5E1] bg-[#0F1420] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
-              >
-                {copiedCode ? (
-                  <>
-                    <Check className="w-4 h-4 text-[#60A5FA]" />
-                    <span>Kode HTML Tersalin</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4" />
-                    <span>Salin Kode HTML Lengkap</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {showDocPanel ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-in fade-in duration-300">
-              {EDITABLE_CHECKLIST.map((item) => (
-                <div
-                  key={item.part}
-                  className="bg-[#0F1420] border border-[#1E293B] rounded-lg p-4 text-xs"
-                >
-                  <p className="font-mono-tabular text-[#60A5FA] mb-1">{item.location}</p>
-                  <p className="font-semibold text-white text-sm mb-1.5">{item.part}</p>
-                  <p className="text-[#94A3B8] leading-relaxed">{item.instruction}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-xs text-[#64748B] text-center sm:text-left">
-              Petunjuk pengeditan teks placeholder dan konfigurasi mandiri disembunyikan agar tampilan ringkas. Klik &ldquo;Buka Checklist Panduan&rdquo; untuk melihat detail.
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* MODAL KODE HTML MANDIRI */}
-      {showCodeModal && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="code-modal-title"
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
-        >
-          <div className="bg-[#0F1420] border border-[#1E293B] rounded-xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden">
-            <div className="px-6 py-4 border-b border-[#1E293B] flex items-center justify-between gap-4">
-              <div>
-                <h3 id="code-modal-title" className="font-display text-lg font-bold text-white">
-                  Kode Single-File HTML Mandiri (HTML + CSS + JS Vanilla)
-                </h3>
-                <p className="text-xs text-[#94A3B8]">
-                  Siap disimpan sebagai index.html dan dibuka langsung di browser tanpa framework.
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleCopyStandaloneHtml}
-                  className="px-3 py-1.5 text-xs font-semibold bg-[#2563EB] text-white rounded-lg"
-                >
-                  {copiedCode ? 'Tersalin!' : 'Salin Semua'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowCodeModal(false)}
-                  className="px-3 py-1.5 text-xs font-medium bg-[#1E293B] text-white rounded-lg"
-                >
-                  Tutup
-                </button>
-              </div>
-            </div>
-            <div className="p-4 overflow-y-auto font-mono-tabular text-xs text-[#CBD5E1] bg-[#07090E]">
-              <pre className="whitespace-pre-wrap break-words">{STANDALONE_HTML_SOURCE}</pre>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 10. FOOTER */}
+      {/* 10. FOOTER RESMI */}
       <footer className="bg-[#05070B] text-[#94A3B8] py-14 mt-auto">
         <div className="max-w-[1200px] mx-auto px-5">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-10 border-b border-[#1E293B]">
@@ -1747,13 +1593,9 @@ export default function App() {
                 segi enam (heksagon) hitam legendaris sejak era 2000-an. Kemasan 1 botol isi 8
                 tablet.
               </p>
-              <button
-                type="button"
-                onClick={() => setShowAgeModal(true)}
-                className="text-xs text-[#60A5FA] hover:underline"
-              >
-                Buka Verifikasi Usia 18+ (Age Gate)
-              </button>
+              <p className="text-xs font-mono-tabular text-[#60A5FA]">
+                ✓ Distribusi Resmi Kota Bandung 40242 · Pengiriman Privasi Aman
+              </p>
             </div>
 
             <div className="md:col-span-4 space-y-2 text-sm">
