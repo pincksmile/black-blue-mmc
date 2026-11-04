@@ -48,8 +48,51 @@
   animation: floatSlow 6s ease-in-out infinite;
 }
 
+@keyframes reviewSlider {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-review-slider {
+  display: flex;
+  width: max-content;
+  animation: reviewSlider 38s linear infinite;
+}
+
+.animate-review-slider:hover,
+.animate-review-slider:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes progressFiveSec {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress-5s {
+  animation: progressFiveSec 5s linear forwards;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-float-slow {
+  .animate-float-slow,
+  .animate-review-slider,
+  .animate-progress-5s {
     animation: none;
   }
   html {

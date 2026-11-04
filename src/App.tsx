@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ShieldCheck,
   Package,
@@ -127,6 +127,33 @@ const WHY_POINTS = [
   },
 ];
 
+const PRODUCT_SPECS = [
+  {
+    num: '01',
+    category: 'BENTUK & KEMASAN',
+    title: 'Kemasan Isi 8 Tablet Segi Enam',
+    desc: 'Tablet padat segi enam berwarna hitam pekat dengan kemasan botol kedap udara agar terlindung rapat dari kelembapan.',
+  },
+  {
+    num: '02',
+    category: 'KANDUNGAN UTAMA',
+    title: '100% Herbal Tradisional Alami',
+    desc: 'Diracik dari bahan herbal alami pilihan untuk membantu memelihara stamina, performa, dan kepercayaan diri pria dewasa.',
+  },
+  {
+    num: '03',
+    category: 'CARA KONSUMSI',
+    title: '1 Tablet + Air Putih Hangat',
+    desc: 'Diminum sesudah makan dengan segelas air putih hangat sekitar 30–60 menit sebelum beraktivitas.',
+  },
+  {
+    num: '04',
+    category: 'ATURAN PAKAI KEMASAN',
+    title: 'Maksimal 1 Tablet / 24 Jam',
+    desc: 'Patuhi takaran saji yang dianjurkan pada label kemasan. Tidak untuk dikonsumsi melebihi dosis harian.',
+  },
+];
+
 const COMPOSITION_ROWS = [
   {
     ingredient: 'Eurycoma longifolia Radix (Pasak Bumi)',
@@ -167,62 +194,78 @@ const COMPOSITION_ROWS = [
 
 interface TestimonialItem {
   id: string;
-  isReal: boolean;
   rating: number;
   date: string;
   quote: string;
-  sellerResponse?: string;
-  productVariant?: string;
-  screenshotUrl?: string;
+  specs?: string;
+  sellerResponse: string;
+  screenshotUrl: string;
   name: string;
   role: string;
-  city: string;
-  consentNote: string;
 }
 
 const TESTIMONIAL_ITEMS: TestimonialItem[] = [
   {
-    id: 'ULASAN ASLI #1',
-    isReal: true,
+    id: 'ULASAN #01',
     rating: 5,
     date: '2026-03-08 14:57',
     quote:
-      'Penilaian Bintang 5 (★★★★★) terverifikasi untuk pembelian produk BLACK BLUE Vitalitas Pria (MMC 600mg) melalui toko resmi Shopee.',
+      'Penilaian Bintang 5 terverifikasi untuk pembelian produk BLACK BLUE Vitalitas Pria (MMC 600mg) di Shopee Official.',
+    specs: 'Varian: BLACK BLUE Vitalitas Pria · MMC 600mg',
     sellerResponse: 'Terimakasih untuk penilaian bintang lima nya',
-    productVariant: 'BLACK BLUE Vitalitas Pria (MMC 600mg)',
     screenshotUrl: '/assets/aistudio/image_866426c9.png',
     name: 'syahrudinsyah243',
-    role: 'Pembeli Terverifikasi Shopee Official',
-    city: 'Indonesia',
-    consentNote: 'Ulasan Asli Shopee (2026-03-08)',
+    role: 'Pembeli Terverifikasi Shopee',
   },
   {
-    id: 'ULASAN ASLI #2',
-    isReal: true,
+    id: 'ULASAN #02',
     rating: 5,
     date: '2026-01-15 17:06',
-    quote:
-      '"Next order lagi, istri ampun" bos nikmat bgt katanya" — Cocok untuk: pria dewasa bujangan juga oke · Keaslian: asli · Kualitas: original 100%.',
+    quote: '"Next order lagi, istri ampun" bos nikmat bgt katanya"',
+    specs: 'Cocok untuk: Pria dewasa · Keaslian: Asli · Kualitas: Original 100%',
     sellerResponse:
-      'Terima kasih atas kepercayaannya kak. Alhamdulillah produknya sesuai harapan. Untuk hasil yang lebih maksimal, disarankan konsumsi rutin ya kak. Silakan order lagi kapan saja, kami sering ada promo menarik.',
-    productVariant: 'Black Blue Obat Kuat Herbal Stamina',
+      'Terima kasih atas kepercayaannya kak. Alhamdulillah produknya sesuai harapan.',
     screenshotUrl: '/assets/aistudio/image_9fd019dc.png',
     name: 'asjsq945m2',
-    role: 'Pembeli Terverifikasi Shopee Official (Repeat Order)',
-    city: 'Indonesia',
-    consentNote: 'Ulasan Asli Shopee (2026-01-15)',
+    role: 'Pembeli Terverifikasi Shopee (Repeat Order)',
   },
   {
-    id: 'SLOT T-03',
-    isReal: false,
+    id: 'ULASAN #03',
     rating: 5,
-    date: 'Slot Tersedia',
+    date: '2026-01-11 09:34',
     quote:
-      '[PLACEHOLDER TESTIMONI 3 — Kirimkan tangkapan layar ulasan Shopee atau chat WhatsApp berikutnya untuk ditampilkan pada kartu ketiga ini.]',
-    name: '[Slot Pelanggan 3]',
-    role: 'Pembeli Terverifikasi · Shopee / WhatsApp',
-    city: 'Indonesia',
-    consentNote: 'Menunggu tambahan screenshot ulasan asli berikutnya',
+      '"barang telah sampai dengan kondisi baik , produk sangat bagus sesuai dengan poto, dan hasil dari produk sangat memuaskan sekali"',
+    specs: 'Cocok untuk: Dewasa · Rasa: Original · Efektivitas: Best Original',
+    sellerResponse:
+      'Terima kasih atas kepercayaannya kak. Alhamdulillah produknya sesuai harapan.',
+    screenshotUrl: '/assets/aistudio/image_20414483.png',
+    name: 's*****7',
+    role: 'Pembeli Terverifikasi Shopee (Dengan Video & Foto)',
+  },
+  {
+    id: 'ULASAN #04',
+    rating: 5,
+    date: '2026-01-10 23:39',
+    quote:
+      '"Barang sampai dengan kondisi baik, produk sesuai dengan yang di posting, dan hasil dari produk sangat memuaskan"',
+    specs: 'Disertai Bukti Video & Foto Kemasan Asli Black Blue MMC',
+    sellerResponse:
+      'Terima kasih atas kepercayaannya kak. Alhamdulillah produknya sesuai harapan.',
+    screenshotUrl: '/assets/aistudio/image_32e2a4f7.png',
+    name: 'f*****d',
+    role: 'Pembeli Terverifikasi Shopee (Dengan Video & Foto)',
+  },
+  {
+    id: 'ULASAN #05',
+    rating: 5,
+    date: '2025-12-17 12:31',
+    quote:
+      'Penilaian Bintang 5 terverifikasi untuk pembelian produk BLACK BLUE MMC Original di Shopee Official.',
+    specs: 'Varian: BLACK BLUE MMC Original',
+    sellerResponse: 'Terimakasih untuk penilaian bintang limanya kka di tunggu next ordernya.',
+    screenshotUrl: '/assets/aistudio/image_6743d7db.png',
+    name: 'mujibsigol',
+    role: 'Pembeli Terverifikasi Shopee',
   },
 ];
 
@@ -324,6 +367,57 @@ export default function App() {
   // Standalone HTML Code Modal / Copy state
   const [showCodeModal, setShowCodeModal] = useState<boolean>(false);
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
+
+  // Step-by-step 5-second Testimonial Spotlight Slider state
+  const [activeReviewIdx, setActiveReviewIdx] = useState<number>(0);
+  const [isReviewPaused, setIsReviewPaused] = useState<boolean>(false);
+
+  // 5-Second Mobile Auto-Slide State for Cerita Merek (Timeline)
+  const [activeTimelineIdx, setActiveTimelineIdx] = useState<number>(0);
+  const [isTimelinePaused, setIsTimelinePaused] = useState<boolean>(false);
+
+  // 5-Second Mobile Auto-Slide State for Tentang Produk Specs
+  const [activeSpecIdx, setActiveSpecIdx] = useState<number>(0);
+  const [isSpecPaused, setIsSpecPaused] = useState<boolean>(false);
+
+  // 5-Second Mobile Auto-Slide State for Kenapa Black Blue MMC
+  const [activeWhyIdx, setActiveWhyIdx] = useState<number>(0);
+  const [isWhyPaused, setIsWhyPaused] = useState<boolean>(false);
+
+  // Collapsible toggle for Documentation Panel on mobile
+  const [showDocPanel, setShowDocPanel] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isReviewPaused) return;
+    const timer = window.setInterval(() => {
+      setActiveReviewIdx((prev) => (prev + 1) % TESTIMONIAL_ITEMS.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isReviewPaused]);
+
+  useEffect(() => {
+    if (isTimelinePaused) return;
+    const timer = window.setInterval(() => {
+      setActiveTimelineIdx((prev) => (prev + 1) % TIMELINE_DATA.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isTimelinePaused]);
+
+  useEffect(() => {
+    if (isSpecPaused) return;
+    const timer = window.setInterval(() => {
+      setActiveSpecIdx((prev) => (prev + 1) % PRODUCT_SPECS.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isSpecPaused]);
+
+  useEffect(() => {
+    if (isWhyPaused) return;
+    const timer = window.setInterval(() => {
+      setActiveWhyIdx((prev) => (prev + 1) % WHY_POINTS.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isWhyPaused]);
 
   const activeHero = HERO_HEADLINE_OPTIONS[selectedHeadlineIdx];
 
@@ -755,27 +849,89 @@ export default function App() {
       </section>
 
       {/* 3. CERITA MEREK / TIMELINE */}
-      <section id="cerita-merek" className="py-16 lg:py-24 border-b border-[#1E293B]">
+      <section id="cerita-merek" className="py-10 sm:py-16 lg:py-20 border-b border-[#1E293B]">
         <div className="max-w-[1200px] mx-auto px-5">
-          <div className="max-w-2xl mb-12">
+          <div className="max-w-2xl mb-8 sm:mb-12">
             <p className="text-xs font-medium tracking-wider text-[#93C5FD] mb-2">
               01. SEJARAH & PERJALANAN MEREK
             </p>
-            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-3">
               Dari Era Kejayaan 2000-an Hingga Bangkit Kembali Hari Ini
             </h2>
-            <p className="text-[#94A3B8] text-base leading-relaxed">
-              Bagi pelanggan lama berusia 40–65 tahun, nama Black Blue membawa kenangan akan produk
-              stamina yang tepercaya. Bagi generasi baru usia 25–45 tahun, ini adalah warisan
-              klasik yang dikemas ulang secara jujur dan modern.
+            <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed">
+              Bagi pelanggan lama usia 40–65 tahun, nama Black Blue membawa nostalgia produk stamina
+              tepercaya. Bagi generasi baru usia 25–45 tahun, ini adalah warisan klasik yang dikemas
+              ulang secara jujur dan modern.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Mobile Auto-Slide Card (Berpindah otomatis setiap 5 detik di layar HP) */}
+          <div
+            className="md:hidden"
+            onMouseEnter={() => setIsTimelinePaused(true)}
+            onMouseLeave={() => setIsTimelinePaused(false)}
+            onTouchStart={() => setIsTimelinePaused(true)}
+            onTouchEnd={() => setIsTimelinePaused(false)}
+          >
+            <div className="bg-[#11192C] border-2 border-[#3B82F6] rounded-xl p-5 relative overflow-hidden shadow-[0_12px_36px_rgba(37,99,235,0.22)]">
+              {/* 5-Second Progress Line */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E293B]">
+                <div
+                  key={`timeline-${activeTimelineIdx}-${isTimelinePaused ? 'p' : 'r'}`}
+                  className={`h-full bg-[#3B82F6] ${
+                    isTimelinePaused ? 'w-full opacity-50' : 'animate-progress-5s'
+                  }`}
+                />
+              </div>
+
+              <div className="flex items-center justify-between gap-2 mb-3 pt-1">
+                <span className="font-mono-tabular text-xs font-semibold text-[#60A5FA]">
+                  {TIMELINE_DATA[activeTimelineIdx].period}
+                </span>
+                <span className="text-[11px] text-[#93C5FD] bg-[#1E3A8A]/50 px-2 py-0.5 rounded">
+                  {TIMELINE_DATA[activeTimelineIdx].phase}
+                </span>
+              </div>
+
+              <h3 className="font-display text-lg font-bold text-white mb-2">
+                0{activeTimelineIdx + 1}. {TIMELINE_DATA[activeTimelineIdx].title}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#CBD5E1] leading-relaxed mb-4">
+                {TIMELINE_DATA[activeTimelineIdx].description}
+              </p>
+              <p className="text-[11px] font-mono-tabular text-[#64748B] pt-2.5 border-t border-[#1E293B]">
+                {TIMELINE_DATA[activeTimelineIdx].editableNote}
+              </p>
+            </div>
+
+            {/* Quick Timeline Period Tabs on Mobile */}
+            <div className="mt-4 grid grid-cols-4 gap-1.5">
+              {TIMELINE_DATA.map((item, idx) => (
+                <button
+                  key={item.period}
+                  type="button"
+                  onClick={() => setActiveTimelineIdx(idx)}
+                  className={`py-1.5 px-1 text-[11px] font-mono-tabular text-center rounded transition-colors truncate ${
+                    activeTimelineIdx === idx
+                      ? 'bg-[#2563EB] text-white font-semibold'
+                      : 'bg-[#0F1420] text-[#94A3B8] border border-[#1E293B]'
+                  }`}
+                >
+                  {item.period.split(' ')[0]} {item.period.split(' ')[1] || ''}
+                </button>
+              ))}
+            </div>
+            <p className="text-[11px] text-center text-[#64748B] mt-2">
+              Berpindah otomatis tiap 5 dtk · Sentuh kartu untuk menjeda
+            </p>
+          </div>
+
+          {/* Desktop Full 2x2 Grid */}
+          <div className="hidden md:grid md:grid-cols-2 gap-6">
             {TIMELINE_DATA.map((item, idx) => (
               <div
                 key={item.period}
-                className="bg-[#0F1420] border border-[#1E293B] rounded-xl p-6 sm:p-7 flex flex-col justify-between"
+                className="bg-[#0F1420] border border-[#1E293B] hover:border-[#3B82F6]/60 rounded-xl p-6 sm:p-7 flex flex-col justify-between transition-colors"
               >
                 <div>
                   <div className="flex items-center justify-between gap-4 mb-4 pb-3 border-b border-[#1E293B]">
@@ -801,19 +957,19 @@ export default function App() {
       </section>
 
       {/* 4. TENTANG PRODUK */}
-      <section id="tentang-produk" className="py-16 lg:py-24 border-b border-[#1E293B]">
+      <section id="tentang-produk" className="py-10 sm:py-16 lg:py-20 border-b border-[#1E293B]">
         <div className="max-w-[1200px] mx-auto px-5">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             {/* Left Info */}
             <div className="lg:col-span-7 flex flex-col justify-between">
               <div>
                 <p className="text-xs font-medium tracking-wider text-[#93C5FD] mb-2">
                   02. TENTANG PRODUK & ATURAN PAKAI
                 </p>
-                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
+                <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-3">
                   Karakteristik Black Blue MMC Tablet & Panduan Konsumsi
                 </h2>
-                <p className="text-[#94A3B8] text-base leading-relaxed mb-8 max-w-[65ch]">
+                <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-[65ch]">
                   Black Blue MMC mempertahankan bentuk tablet segi enam (heksagon) berwarna hitam
                   sebagai tanda pengenal utamanya, dipadukan dengan bahan baku 100% Herbal
                   Tradisional Alami untuk membantu menjaga stamina dan meningkatkan kepercayaan diri
@@ -821,58 +977,73 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="bg-[#0F1420] border border-[#1E293B] rounded-xl p-5">
-                  <p className="text-xs font-mono-tabular text-[#93C5FD] mb-1.5">
-                    BENTUK & KEMASAN
-                  </p>
+              {/* Mobile Auto-Slide Card for Specs (Berpindah otomatis tiap 5 detik di HP) */}
+              <div
+                className="sm:hidden mb-6"
+                onMouseEnter={() => setIsSpecPaused(true)}
+                onMouseLeave={() => setIsSpecPaused(false)}
+                onTouchStart={() => setIsSpecPaused(true)}
+                onTouchEnd={() => setIsSpecPaused(false)}
+              >
+                <div className="bg-[#11192C] border-2 border-[#3B82F6] rounded-xl p-5 relative overflow-hidden shadow-[0_12px_36px_rgba(37,99,235,0.22)]">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E293B]">
+                    <div
+                      key={`spec-${activeSpecIdx}-${isSpecPaused ? 'p' : 'r'}`}
+                      className={`h-full bg-[#3B82F6] ${
+                        isSpecPaused ? 'w-full opacity-50' : 'animate-progress-5s'
+                      }`}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between gap-2 mb-2 pt-1">
+                    <p className="text-xs font-mono-tabular text-[#93C5FD]">
+                      {PRODUCT_SPECS[activeSpecIdx].category}
+                    </p>
+                    <span className="text-[11px] font-mono-tabular text-[#60A5FA]">
+                      0{activeSpecIdx + 1} / 04
+                    </span>
+                  </div>
                   <h3 className="font-display text-lg font-bold text-white mb-2">
-                    Kemasan Isi 8 Tablet Segi Enam
+                    {PRODUCT_SPECS[activeSpecIdx].title}
                   </h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">
-                    Tablet padat segi enam berwarna hitam pekat dengan kemasan ikonik Black Blue
-                    MMC yang terlindung rapat dari kelembapan.
+                  <p className="text-xs sm:text-sm text-[#CBD5E1] leading-relaxed">
+                    {PRODUCT_SPECS[activeSpecIdx].desc}
                   </p>
                 </div>
 
-                <div className="bg-[#0F1420] border border-[#1E293B] rounded-xl p-5">
-                  <p className="text-xs font-mono-tabular text-[#93C5FD] mb-1.5">
-                    KANDUNGAN UTAMA
-                  </p>
-                  <h3 className="font-display text-lg font-bold text-white mb-2">
-                    100% Herbal Tradisional Alami
-                  </h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">
-                    Diracik dari bahan herbal alami pilihan yang diformulasikan untuk membantu
-                    memelihara stamina, performa, dan kepercayaan diri pria dewasa.
-                  </p>
+                {/* 4 Step Dots on Mobile */}
+                <div className="mt-3 flex items-center justify-center gap-2">
+                  {PRODUCT_SPECS.map((spec, i) => (
+                    <button
+                      key={spec.num}
+                      type="button"
+                      aria-label={`Lihat ${spec.category}`}
+                      onClick={() => setActiveSpecIdx(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === activeSpecIdx
+                          ? 'w-8 bg-[#3B82F6]'
+                          : 'w-2 bg-[#1E293B] hover:bg-[#334155]'
+                      }`}
+                    />
+                  ))}
                 </div>
+              </div>
 
-                <div className="bg-[#0F1420] border border-[#1E293B] rounded-xl p-5">
-                  <p className="text-xs font-mono-tabular text-[#93C5FD] mb-1.5">
-                    CARA KONSUMSI
-                  </p>
-                  <h3 className="font-display text-lg font-bold text-white mb-2">
-                    1 Tablet + Air Putih Hangat
-                  </h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">
-                    Diminum sesudah makan dengan segelas air hangat sekitar 30–60 menit sebelum
-                    beraktivitas.
-                  </p>
-                </div>
-
-                <div className="bg-[#0F1420] border border-[#1E293B] rounded-xl p-5">
-                  <p className="text-xs font-mono-tabular text-[#93C5FD] mb-1.5">
-                    ATURAN PAKAI KEMASAN
-                  </p>
-                  <h3 className="font-display text-lg font-bold text-white mb-2">
-                    Maksimal 1 Tablet / 24 Jam
-                  </h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">
-                    Patuhi takaran saji yang dianjurkan pada label kemasan. Tidak untuk dikonsumsi
-                    melebihi dosis harian.
-                  </p>
-                </div>
+              {/* Tablet & Desktop 2x2 Grid */}
+              <div className="hidden sm:grid sm:grid-cols-2 gap-5">
+                {PRODUCT_SPECS.map((spec) => (
+                  <div
+                    key={spec.num}
+                    className="bg-[#0F1420] border border-[#1E293B] hover:border-[#3B82F6]/60 rounded-xl p-5 transition-colors"
+                  >
+                    <p className="text-xs font-mono-tabular text-[#93C5FD] mb-1.5">
+                      {spec.category}
+                    </p>
+                    <h3 className="font-display text-lg font-bold text-white mb-2">
+                      {spec.title}
+                    </h3>
+                    <p className="text-sm text-[#94A3B8] leading-relaxed">{spec.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -884,17 +1055,17 @@ export default function App() {
                     src="/assets/aistudio/Iklan_Futuristik_MMC_Black_Blue_7d13e01e.png"
                     alt="Kemasan Asli Black Blue MMC Tablet — Aman & Terpercaya, 100% Herbal Alami, Menjaga Stamina, Meningkatkan Kepercayaan Diri"
                     loading="lazy"
-                    className="w-full h-auto rounded-lg border border-[#1E293B] object-contain"
+                    className="w-full max-h-[260px] sm:max-h-none h-auto rounded-lg border border-[#1E293B] object-contain"
                   />
                 </div>
-                <div className="p-6 border-t border-[#1E293B]">
+                <div className="p-5 sm:p-6 border-t border-[#1E293B]">
                   <p className="text-xs font-mono-tabular text-[#93C5FD] mb-1">
                     IDENTITAS KEMASAN ASLI
                   </p>
-                  <h3 className="font-display text-xl font-bold text-white mb-2">
+                  <h3 className="font-display text-lg sm:text-xl font-bold text-white mb-2">
                     Black Blue MMC Tablet Original
                   </h3>
-                  <p className="text-sm text-[#94A3B8] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed">
                     Pastikan Anda mendapatkan produk dengan kemasan asli Black Blue MMC melalui
                     jalur resmi WhatsApp kami atau toko resmi Shopee.
                   </p>
@@ -906,26 +1077,81 @@ export default function App() {
       </section>
 
       {/* 5. KENAPA BLACK BLUE MMC */}
-      <section className="py-16 lg:py-24 border-b border-[#1E293B] bg-hex-pattern">
+      <section className="py-10 sm:py-16 lg:py-20 border-b border-[#1E293B] bg-hex-pattern">
         <div className="max-w-[1200px] mx-auto px-5">
-          <div className="max-w-2xl mb-12">
+          <div className="max-w-2xl mb-8 sm:mb-12">
             <p className="text-xs font-medium tracking-wider text-[#93C5FD] mb-2">
               03. KEUNGGULAN YANG DAPAT DIPERTANGGUNGJAWABKAN
             </p>
-            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-3">
               Mengapa Pria Dewasa Memilih Black Blue MMC?
             </h2>
-            <p className="text-[#94A3B8] text-base leading-relaxed">
+            <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed">
               Tanpa klaim berlebihan. Kami berkomitmen pada keaslian produk, kejelasan aturan
               pakai, dan kenyamanan transaksi pelanggan.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Mobile Auto-Slide Card for 6 Keunggulan (Berpindah otomatis tiap 5 detik di HP) */}
+          <div
+            className="md:hidden"
+            onMouseEnter={() => setIsWhyPaused(true)}
+            onMouseLeave={() => setIsWhyPaused(false)}
+            onTouchStart={() => setIsWhyPaused(true)}
+            onTouchEnd={() => setIsWhyPaused(false)}
+          >
+            <div className="bg-[#11192C] border-2 border-[#3B82F6] rounded-xl p-5 relative overflow-hidden shadow-[0_12px_36px_rgba(37,99,235,0.22)]">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E293B]">
+                <div
+                  key={`why-${activeWhyIdx}-${isWhyPaused ? 'p' : 'r'}`}
+                  className={`h-full bg-[#3B82F6] ${
+                    isWhyPaused ? 'w-full opacity-50' : 'animate-progress-5s'
+                  }`}
+                />
+              </div>
+
+              <div className="flex items-center justify-between gap-2 mb-3 pt-1">
+                <HexagonIcon label={WHY_POINTS[activeWhyIdx].num} />
+                <span className="text-[11px] font-mono-tabular text-[#60A5FA]">
+                  Keunggulan 0{activeWhyIdx + 1} / 06
+                </span>
+              </div>
+
+              <h3 className="font-display text-lg font-bold text-white mb-2">
+                {WHY_POINTS[activeWhyIdx].title}
+              </h3>
+              <p className="text-xs sm:text-sm text-[#CBD5E1] leading-relaxed">
+                {WHY_POINTS[activeWhyIdx].desc}
+              </p>
+            </div>
+
+            {/* 6 Step Progress Indicators on Mobile */}
+            <div className="mt-4 flex items-center justify-center gap-1.5">
+              {WHY_POINTS.map((point, i) => (
+                <button
+                  key={point.num}
+                  type="button"
+                  aria-label={`Keunggulan ${point.num}`}
+                  onClick={() => setActiveWhyIdx(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === activeWhyIdx
+                      ? 'w-7 bg-[#3B82F6]'
+                      : 'w-2 bg-[#1E293B] hover:bg-[#334155]'
+                  }`}
+                />
+              ))}
+            </div>
+            <p className="text-[11px] text-center text-[#64748B] mt-2">
+              Berpindah otomatis tiap 5 dtk · Sentuh kartu untuk menjeda
+            </p>
+          </div>
+
+          {/* Desktop Full 3x2 Grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {WHY_POINTS.map((point) => (
               <div
                 key={point.num}
-                className="bg-[#0F1420] border border-[#1E293B] rounded-xl p-6 flex flex-col justify-between"
+                className="bg-[#0F1420] border border-[#1E293B] hover:border-[#3B82F6]/60 rounded-xl p-6 flex flex-col justify-between transition-colors"
               >
                 <div>
                   <div className="mb-4">
@@ -941,7 +1167,7 @@ export default function App() {
       </section>
 
       {/* 6. KOMPOSISI & INFORMASI GIZI */}
-      <section id="komposisi" className="py-16 lg:py-24 border-b border-[#1E293B]">
+      <section id="komposisi" className="py-10 sm:py-14 lg:py-20 border-b border-[#1E293B]">
         <div className="max-w-[1200px] mx-auto px-5">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
             <div className="max-w-2xl">
@@ -995,104 +1221,194 @@ export default function App() {
         </div>
       </section>
 
-      {/* 7. TESTIMONI PELANGGAN */}
-      <section id="testimoni" className="py-16 lg:py-24 border-b border-[#1E293B]">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-            <div className="max-w-2xl">
+      {/* 7. TESTIMONI PELANGGAN — 5-SECOND STEP-BY-STEP DOMINANT SPOTLIGHT SLIDER */}
+      <section id="testimoni" className="py-10 sm:py-16 lg:py-20 border-b border-[#1E293B] overflow-hidden">
+        <div className="max-w-[1200px] mx-auto px-5 mb-6 sm:mb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="max-w-xl">
               <p className="text-xs font-medium tracking-wider text-[#93C5FD] mb-2">
-                05. BUKTI ULASAN & PENGALAMAN PELANGGAN
+                05. BUKTI ULASAN & PENILAIAN PEMBELI ASLI
               </p>
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-3">
-                Penilaian Asli Pembeli Black Blue MMC
+              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-2">
+                5.0 / 5.0 Penilaian Pembeli di Shopee Official
               </h2>
-              <p className="text-[#94A3B8] text-base leading-relaxed">
-                Bukti penilaian bintang 5 dari pembeli resmi di Shopee Official kami, ditampilkan
-                secara transparan beserta tangkapan layar asli.
+              <p className="text-[#94A3B8] text-xs sm:text-sm leading-relaxed">
+                Slide berpindah otomatis satu demi satu setiap 5 detik. Sentuh atau arahkan kursor
+                pada kartu utama di tengah untuk menahan tampilan.
               </p>
             </div>
-            <a
-              href="https://s.shopee.co.id/1qdLNuMjhs"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-[#CBD5E1] bg-[#0F1420] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
-            >
-              <span>Lihat Ulasan di Shopee Official</span>
-              <ExternalLink className="w-3.5 h-3.5 text-[#60A5FA]" />
-            </a>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {TESTIMONIAL_ITEMS.map((item) => (
-              <div
-                key={item.id}
-                className={`rounded-xl p-6 flex flex-col justify-between border ${
-                  item.isReal
-                    ? 'bg-[#0F1420] border-[#2563EB]'
-                    : 'bg-[#0F1420]/60 border-[#1E293B]'
-                }`}
+            <div className="flex items-center gap-3 text-xs text-[#94A3B8] shrink-0">
+              <span className="font-mono-tabular text-[#60A5FA] font-semibold">
+                Ulasan 0{activeReviewIdx + 1} / 0{TESTIMONIAL_ITEMS.length}
+              </span>
+              <span aria-hidden="true">·</span>
+              <a
+                href="https://s.shopee.co.id/1qdLNuMjhs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#CBD5E1] hover:text-white underline underline-offset-4 transition-colors"
               >
-                <div>
-                  <div className="flex items-center justify-between text-xs font-mono-tabular mb-3">
-                    <span className={item.isReal ? 'text-[#60A5FA] font-semibold' : 'text-[#64748B]'}>
-                      {item.id}
-                    </span>
-                    <span className="text-[#94A3B8]">{item.date}</span>
-                  </div>
-
-                  {/* Star Rating */}
-                  <div
-                    className="flex items-center gap-1 text-amber-400 text-sm mb-3"
-                    aria-label={`Penilaian ${item.rating} dari 5 bintang`}
-                  >
-                    <span>★★★★★</span>
-                    <span className="ml-1.5 text-xs font-mono-tabular text-[#CBD5E1]">
-                      5.0 / 5.0
-                    </span>
-                  </div>
-
-                  {item.screenshotUrl && (
-                    <div className="mb-4 rounded-lg overflow-hidden border border-[#1E293B] bg-white p-2">
-                      <img
-                        src={item.screenshotUrl}
-                        alt={`Bukti tangkapan layar ulasan bintang 5 dari ${item.name} pada ${item.date}`}
-                        loading="lazy"
-                        className="w-full h-auto rounded object-contain"
-                      />
-                    </div>
-                  )}
-
-                  <p
-                    className={`text-sm leading-relaxed mb-4 ${
-                      item.isReal ? 'text-[#F1F5F9]' : 'text-[#94A3B8] italic'
-                    }`}
-                  >
-                    {item.quote}
-                  </p>
-
-                  {item.sellerResponse && (
-                    <div className="mb-5 p-3 rounded-lg bg-[#07090E] border border-[#1E293B] text-xs">
-                      <p className="font-semibold text-[#93C5FD] mb-1">Respon Penjual Resmi:</p>
-                      <p className="text-[#CBD5E1]">&ldquo;{item.sellerResponse}&rdquo;</p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="pt-4 border-t border-[#1E293B]">
-                  <p className="text-sm font-semibold text-white">{item.name}</p>
-                  <p className="text-xs text-[#94A3B8] mt-0.5">{item.role}</p>
-                  <p className="text-xs font-mono-tabular text-[#60A5FA] mt-2">
-                    {item.consentNote}
-                  </p>
-                </div>
-              </div>
-            ))}
+                Cek Toko Shopee Resmi
+              </a>
+            </div>
           </div>
         </div>
+
+        {/* 3-Card Spotlight Stage (Prev - Dominant Active Center - Next) without Arrow Buttons */}
+        {(() => {
+          const total = TESTIMONIAL_ITEMS.length;
+          const prevIdx = (activeReviewIdx - 1 + total) % total;
+          const nextIdx = (activeReviewIdx + 1) % total;
+          const stageItems = [
+            { item: TESTIMONIAL_ITEMS[prevIdx], idx: prevIdx, position: 'prev' as const },
+            { item: TESTIMONIAL_ITEMS[activeReviewIdx], idx: activeReviewIdx, position: 'active' as const },
+            { item: TESTIMONIAL_ITEMS[nextIdx], idx: nextIdx, position: 'next' as const },
+          ];
+
+          return (
+            <div
+              onMouseEnter={() => setIsReviewPaused(true)}
+              onMouseLeave={() => setIsReviewPaused(false)}
+              onTouchStart={() => setIsReviewPaused(true)}
+              onTouchEnd={() => setIsReviewPaused(false)}
+              className="max-w-[1200px] mx-auto px-5"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-center">
+                {stageItems.map(({ item, idx, position }) => {
+                  const isActive = position === 'active';
+                  return (
+                    <article
+                      key={`${item.id}-${position}`}
+                      onClick={() => setActiveReviewIdx(idx)}
+                      className={`transition-all duration-500 ease-out rounded-2xl flex flex-col justify-between relative overflow-hidden ${
+                        isActive
+                          ? 'lg:col-span-6 bg-[#11192C] border-2 border-[#3B82F6] p-5 sm:p-7 scale-100 opacity-100 z-20 shadow-[0_20px_60px_rgba(37,99,235,0.28)]'
+                          : 'hidden lg:flex lg:col-span-3 bg-[#0B101B] border border-[#1E293B] p-4 scale-90 opacity-40 hover:opacity-75 cursor-pointer z-10'
+                      }`}
+                    >
+                      {/* 5-Second Auto-Step Progress Line on Dominant Active Card */}
+                      {isActive && (
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E293B] overflow-hidden">
+                          <div
+                            key={`review-${activeReviewIdx}-${isReviewPaused ? 'paused' : 'running'}`}
+                            className={`h-full bg-[#3B82F6] ${
+                              isReviewPaused ? 'w-full opacity-50' : 'animate-progress-5s'
+                            }`}
+                          />
+                        </div>
+                      )}
+
+                      <div>
+                        {/* Card Header */}
+                        <div className="flex items-center justify-between gap-2 mb-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono-tabular text-xs font-semibold text-[#60A5FA]">
+                                {item.id}
+                              </span>
+                              {isActive && (
+                                <span className="text-[11px] text-[#93C5FD]">
+                                  · Sorotan Utama
+                                </span>
+                              )}
+                            </div>
+                            <p
+                              className={`font-display font-bold text-white mt-0.5 ${
+                                isActive ? 'text-base sm:text-lg' : 'text-sm'
+                              }`}
+                            >
+                              {item.name}
+                            </p>
+                            <p className="text-[11px] text-[#94A3B8]">{item.role}</p>
+                          </div>
+
+                          <div className="text-right shrink-0">
+                            <div
+                              className={`text-amber-400 tracking-tight leading-none ${
+                                isActive ? 'text-sm sm:text-base' : 'text-xs'
+                              }`}
+                            >
+                              ★★★★★
+                            </div>
+                            <span className="text-[11px] font-mono-tabular text-[#94A3B8]">
+                              {item.date}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Authentic Shopee Screenshot Frame */}
+                        <div
+                          className={`rounded-xl overflow-hidden border border-[#1E293B] bg-white mb-3.5 ${
+                            isActive ? 'p-2 sm:p-2.5 shadow-inner' : 'p-1.5'
+                          }`}
+                        >
+                          <img
+                            src={item.screenshotUrl}
+                            alt={`Bukti penilaian bintang 5 dari ${item.name} pada ${item.date}`}
+                            loading="lazy"
+                            className={`w-full object-contain rounded ${
+                              isActive ? 'h-40 sm:h-56' : 'h-28'
+                            }`}
+                          />
+                        </div>
+
+                        {/* Buyer Quote & Specs */}
+                        <p
+                          className={`leading-relaxed text-[#F8FAFC] ${
+                            isActive
+                              ? 'text-xs sm:text-sm font-medium mb-2'
+                              : 'text-xs line-clamp-2 mb-1'
+                          }`}
+                        >
+                          {item.quote}
+                        </p>
+
+                        {item.specs && (
+                          <p
+                            className={`font-mono-tabular text-[#60A5FA] ${
+                              isActive ? 'text-xs mb-3' : 'text-[11px] truncate'
+                            }`}
+                          >
+                            {item.specs}
+                          </p>
+                        )}
+
+                        {/* Seller Response (Full display on Dominant Active Card) */}
+                        {isActive && (
+                          <div className="p-3 rounded-xl bg-[#07090E] border border-[#1E293B] text-xs">
+                            <span className="font-semibold text-[#93C5FD]">Respon Penjual: </span>
+                            <span className="text-[#CBD5E1]">&ldquo;{item.sellerResponse}&rdquo;</span>
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              {/* Minimalist Step Indicators (No Arrow Buttons) */}
+              <div className="mt-5 sm:mt-7 flex items-center justify-center gap-2">
+                {TESTIMONIAL_ITEMS.map((t, i) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    aria-label={`Tampilkan ${t.id} dari ${t.name}`}
+                    onClick={() => setActiveReviewIdx(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === activeReviewIdx
+                        ? 'w-8 sm:w-10 bg-[#3B82F6]'
+                        : 'w-2 sm:w-2.5 bg-[#1E293B] hover:bg-[#334155]'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       {/* 8. FAQ (ACCORDION INTERAKTIF) */}
-      <section id="faq" className="py-16 lg:py-24 border-b border-[#1E293B]">
+      <section id="faq" className="py-10 sm:py-14 lg:py-20 border-b border-[#1E293B]">
         <div className="max-w-[1200px] mx-auto px-5">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             <div className="lg:col-span-5">
@@ -1157,7 +1473,7 @@ export default function App() {
       </section>
 
       {/* 9. CARA PEMESANAN / CTA & KEPATUHAN WAJIB */}
-      <section id="pemesanan" className="py-16 lg:py-24 border-b border-[#1E293B] bg-hex-pattern">
+      <section id="pemesanan" className="py-10 sm:py-14 lg:py-20 border-b border-[#1E293B] bg-hex-pattern">
         <div className="max-w-[1200px] mx-auto px-5">
           <div className="bg-[#0F1420] border border-[#1E3A8A] rounded-2xl p-6 sm:p-10 lg:p-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -1321,6 +1637,14 @@ export default function App() {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 type="button"
+                onClick={() => setShowDocPanel(!showDocPanel)}
+                className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-[#CBD5E1] bg-[#0F1420] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
+              >
+                <span>{showDocPanel ? 'Tutup Checklist Panduan' : 'Buka Checklist Panduan (5 Poin)'}</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-[#60A5FA] transition-transform duration-200 ${showDocPanel ? 'rotate-180' : ''}`} />
+              </button>
+              <button
+                type="button"
                 onClick={handleDownloadStandaloneHtml}
                 className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#2563EB] hover:bg-[#1D4ED8] rounded-lg transition-colors whitespace-nowrap shrink-0"
               >
@@ -1347,18 +1671,24 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {EDITABLE_CHECKLIST.map((item) => (
-              <div
-                key={item.part}
-                className="bg-[#0F1420] border border-[#1E293B] rounded-lg p-4 text-xs"
-              >
-                <p className="font-mono-tabular text-[#60A5FA] mb-1">{item.location}</p>
-                <p className="font-semibold text-white text-sm mb-1.5">{item.part}</p>
-                <p className="text-[#94A3B8] leading-relaxed">{item.instruction}</p>
-              </div>
-            ))}
-          </div>
+          {showDocPanel ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-in fade-in duration-300">
+              {EDITABLE_CHECKLIST.map((item) => (
+                <div
+                  key={item.part}
+                  className="bg-[#0F1420] border border-[#1E293B] rounded-lg p-4 text-xs"
+                >
+                  <p className="font-mono-tabular text-[#60A5FA] mb-1">{item.location}</p>
+                  <p className="font-semibold text-white text-sm mb-1.5">{item.part}</p>
+                  <p className="text-[#94A3B8] leading-relaxed">{item.instruction}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-[#64748B] text-center sm:text-left">
+              Petunjuk pengeditan teks placeholder dan konfigurasi mandiri disembunyikan agar tampilan ringkas. Klik &ldquo;Buka Checklist Panduan&rdquo; untuk melihat detail.
+            </p>
+          )}
         </div>
       </section>
 
