@@ -312,9 +312,24 @@ function HexagonIcon({ label }: { label: string }) {
 }
 
 export default function App() {
-  const [ageVerified, setAgeVerified] = useState<boolean>(false);
-  const [showAgeModal, setShowAgeModal] = useState<boolean>(false);
+  const [ageVerified, setAgeVerified] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('bbmmc_age_verified') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [underageWarning, setUnderageWarning] = useState<boolean>(false);
+
+  const handleConfirmAge = () => {
+    try {
+      localStorage.setItem('bbmmc_age_verified', 'true');
+    } catch {
+      // ignore
+    }
+    setAgeVerified(true);
+    setUnderageWarning(false);
+  };
 
   const [selectedHeadlineIdx, setSelectedHeadlineIdx] = useState<number>(0);
   const [heroVisualTab, setHeroVisualTab] = useState<'studio' | 'diagram'>('studio');
@@ -463,105 +478,81 @@ export default function App() {
         </div>
       </header>
 
-      {/* WAJIB: AGE GATE 18+ COMPLIANCE BAR & MODAL TRIGGER */}
+      {/* MODAL VERIFIKASI USIA (AGE GATE 18+) — Tampil Langsung untuk Pengunjung Baru */}
       {!ageVerified && (
-        <div
-          role="region"
-          aria-label="Konfirmasi Usia 18 Tahun ke Atas"
-          className="bg-[#0F172A] border-b border-[#1E3A8A]/60 px-5 py-2.5"
-        >
-          <div className="max-w-[1200px] mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs sm:text-sm">
-            <div className="flex items-center gap-2.5 text-[#CBD5E1]">
-              <ShieldCheck className="w-4 h-4 text-[#60A5FA] shrink-0" />
-              <span>
-                <strong className="text-white">Verifikasi Kepatuhan (18+):</strong> Situs ini
-                ditujukan khusus untuk pria dewasa berusia 18 tahun ke atas.
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5 shrink-0">
-              <button
-                type="button"
-                onClick={() => setAgeVerified(true)}
-                className="px-3 py-1 text-xs font-semibold bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded transition-colors whitespace-nowrap shrink-0"
-              >
-                Saya 18+ Tahun
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowAgeModal(true)}
-                className="px-3 py-1 text-xs font-medium text-[#94A3B8] hover:text-white border border-[#334155] rounded transition-colors whitespace-nowrap shrink-0"
-              >
-                Lihat Age Gate Penuh
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL AGE GATE 18+ (Saat diaktifkan atau diuji) */}
-      {showAgeModal && (
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="age-gate-modal-title"
-          className="fixed inset-0 z-50 bg-[#07090E]/95 backdrop-blur-md flex items-center justify-center p-5"
+          className="fixed inset-0 z-50 bg-[#07090E]/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-5"
         >
-          <div className="bg-[#0F1420] border border-[#1E293B] rounded-xl max-w-md w-full p-7 text-center shadow-2xl">
-            <div className="w-14 h-14 mx-auto mb-4 flex items-center justify-center">
-              <svg viewBox="0 0 64 64" className="w-full h-full">
+          <div className="bg-[#0F1420] border-2 border-[#1E3A8A] rounded-2xl max-w-md w-full p-6 sm:p-8 text-center shadow-[0_20px_60px_rgba(0,0,0,0.85)] relative overflow-hidden">
+            {/* Top Accent Line */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1D4ED8] via-[#3B82F6] to-[#1D4ED8]" />
+
+            <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+              <svg viewBox="0 0 64 64" className="w-full h-full drop-shadow-[0_4px_16px_rgba(37,99,235,0.3)]">
                 <polygon
                   points="32,4 58,18 58,46 32,60 6,46 6,18"
                   fill="#090D16"
-                  stroke="#2563EB"
-                  strokeWidth="2"
+                  stroke="#3B82F6"
+                  strokeWidth="2.5"
                 />
                 <text
                   x="32"
-                  y="37"
+                  y="38"
                   textAnchor="middle"
                   fill="#F8FAFC"
-                  className="font-mono-tabular font-bold text-sm"
+                  className="font-mono-tabular font-bold text-base"
                 >
                   18+
                 </text>
               </svg>
             </div>
-            <p className="text-xs font-medium tracking-wider text-[#93C5FD] mb-2">
-              VERIFIKASI USIA PENGUNJUNG
+
+            <p className="text-xs font-mono-tabular font-semibold tracking-wider text-[#93C5FD] mb-2 uppercase">
+              Verifikasi Kepatuhan Usia
             </p>
+
             <h2
               id="age-gate-modal-title"
               className="font-display text-2xl font-bold text-white mb-3"
             >
-              Situs Ini Untuk Usia 18 Tahun ke Atas
+              Situs Ini Khusus Usia 18 Tahun ke Atas
             </h2>
-            <p className="text-sm text-[#94A3B8] leading-relaxed mb-6">
-              Black Blue MMC adalah produk suplemen vitalitas pria dewasa berbahan herbal
-              tradisional. Tidak diperuntukkan bagi anak-anak, wanita hamil, atau ibu menyusui.
+
+            <p className="text-xs sm:text-sm text-[#94A3B8] leading-relaxed mb-6">
+              Black Blue MMC adalah suplemen herbal tradisional untuk vitalitas pria dewasa. Tidak
+              diperuntukkan bagi anak-anak di bawah 18 tahun, wanita hamil, atau ibu menyusui.
             </p>
 
-            {underageWarning ? (
-              <div className="p-4 rounded-lg bg-[#1E1B2E] border border-[#3B82F6]/40 text-xs text-[#CBD5E1] mb-4">
-                Maaf, akses situs ini dibatasi hanya untuk pengunjung berusia 18 tahun ke atas.
+            {underageWarning && (
+              <div className="p-3.5 rounded-xl bg-[#2D1515] border border-red-500/40 text-xs text-[#FECACA] mb-5 text-center">
+                <p className="font-semibold mb-1">Akses Dibatasi (Khusus 18+)</p>
+                <p className="text-[11px] mb-2.5 text-[#FCA5A5]">
+                  Mohon maaf, Anda belum memenuhi syarat usia untuk mengakses informasi produk ini.
+                </p>
+                <a
+                  href="https://www.google.com"
+                  className="inline-block px-3.5 py-1.5 text-xs font-semibold text-white bg-red-600 hover:bg-red-700 rounded transition-colors"
+                >
+                  Tinggalkan Situs
+                </a>
               </div>
-            ) : null}
+            )}
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 type="button"
-                onClick={() => {
-                  setAgeVerified(true);
-                  setUnderageWarning(false);
-                  setShowAgeModal(false);
-                }}
-                className="px-5 py-2.5 text-sm font-semibold bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg transition-colors whitespace-nowrap shrink-0"
+                onClick={handleConfirmAge}
+                className="flex-1 py-3 px-5 text-sm font-semibold bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg transition-colors whitespace-nowrap shadow-lg shadow-[#2563EB]/25"
               >
-                Saya Berusia 18+ Tahun (Masuk)
+                Saya 18+ Tahun (Masuk)
               </button>
               <button
                 type="button"
                 onClick={() => setUnderageWarning(true)}
-                className="px-5 py-2.5 text-sm font-medium bg-transparent hover:bg-[#1E293B] text-[#94A3B8] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
+                className="py-3 px-4 text-sm font-medium bg-[#07090E] hover:bg-[#1E293B] text-[#94A3B8] border border-[#334155] rounded-lg transition-colors whitespace-nowrap"
               >
                 Belum 18 Tahun
               </button>
