@@ -332,7 +332,6 @@ export default function App() {
   };
 
   const [selectedHeadlineIdx, setSelectedHeadlineIdx] = useState<number>(0);
-  const [heroVisualTab, setHeroVisualTab] = useState<'studio' | 'diagram'>('studio');
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   // Order Calculator State
@@ -570,64 +569,35 @@ export default function App() {
         />
 
         <div className="max-w-[1200px] mx-auto px-5 py-12 lg:py-20">
-          {/* 4 Pilar Narasi Black Blue MMC (Otomatis Berpindah Tiap 5 Detik / Klik Tab) */}
-          <div
-            className="mb-8 pb-5 border-b border-[#1E293B]/80"
-            onMouseEnter={() => setIsHeroPaused(true)}
-            onMouseLeave={() => setIsHeroPaused(false)}
-            onTouchStart={() => setIsHeroPaused(true)}
-            onTouchEnd={() => setIsHeroPaused(false)}
-          >
-            <div className="flex items-center justify-between gap-2 mb-2.5">
-              <span className="text-xs font-mono-tabular text-[#93C5FD]">
-                PILAR UTAMA BLACK BLUE MMC
-              </span>
-              <span className="text-[11px] font-mono-tabular text-[#60A5FA]">
-                0{selectedHeadlineIdx + 1} / 0{HERO_HEADLINE_OPTIONS.length} · Berpindah Tiap 5 Detik
-              </span>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {HERO_HEADLINE_OPTIONS.map((opt, idx) => {
-                const isActive = selectedHeadlineIdx === idx;
-                return (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => setSelectedHeadlineIdx(idx)}
-                    className={`relative p-2.5 text-left rounded-lg border transition-all overflow-hidden ${
-                      isActive
-                        ? 'bg-[#11192C] border-[#3B82F6] text-white shadow-[0_4px_20px_rgba(37,99,235,0.2)]'
-                        : 'bg-[#0F1420] border-[#1E293B] text-[#94A3B8] hover:text-white hover:border-[#334155]'
-                    }`}
-                  >
-                    {isActive && (
-                      <div className="absolute top-0 left-0 right-0 h-1 bg-[#1E293B]">
-                        <div
-                          key={`hero-${selectedHeadlineIdx}-${isHeroPaused ? 'p' : 'r'}`}
-                          className={`h-full bg-[#3B82F6] ${
-                            isHeroPaused ? 'w-full opacity-50' : 'animate-progress-5s'
-                          }`}
-                        />
-                      </div>
-                    )}
-                    <span className="block font-mono-tabular text-[10px] text-[#60A5FA] mb-0.5">
-                      0{idx + 1}
-                    </span>
-                    <span className="block text-xs font-semibold truncate">
-                      {opt.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
             {/* Left Column: Brand Value Proposition */}
-            <div className="lg:col-span-7 flex flex-col justify-center">
-              <p className="text-xs sm:text-sm font-medium tracking-wider text-[#93C5FD] mb-3">
-                {activeHero.kicker}
-              </p>
+            <div
+              className="lg:col-span-7 flex flex-col justify-center"
+              onMouseEnter={() => setIsHeroPaused(true)}
+              onMouseLeave={() => setIsHeroPaused(false)}
+              onTouchStart={() => setIsHeroPaused(true)}
+              onTouchEnd={() => setIsHeroPaused(false)}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <p className="text-xs sm:text-sm font-medium tracking-wider text-[#93C5FD]">
+                  {activeHero.kicker}
+                </p>
+                <div className="flex items-center gap-1.5 ml-auto sm:ml-2">
+                  {HERO_HEADLINE_OPTIONS.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      aria-label={`Pilar ${i + 1}`}
+                      onClick={() => setSelectedHeadlineIdx(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === selectedHeadlineIdx
+                          ? 'w-6 bg-[#3B82F6]'
+                          : 'w-2 bg-[#1E293B] hover:bg-[#334155]'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
 
               <h1
                 className="font-display font-bold text-white tracking-tight mb-5"
@@ -676,115 +646,23 @@ export default function App() {
             {/* Right Column: Authentic Black Blue MMC Product Showcase */}
             <div className="lg:col-span-5 flex flex-col">
               <div className="flex-1 bg-[#0F1420] border border-[#1E293B] rounded-xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden">
-                {/* Mode Toggle inside Product Stage */}
+                {/* Authentic Black Blue MMC Official Packaging Showcase */}
                 <div className="flex items-center justify-between gap-2 mb-3.5 z-10">
-                  <span className="text-xs font-mono-tabular text-[#93C5FD]">
+                  <span className="text-xs font-mono-tabular font-semibold text-[#93C5FD]">
                     KEMASAN RESMI BLACK BLUE MMC
                   </span>
-                  <div className="flex items-center gap-1 p-1 bg-[#07090E] border border-[#1E293B] rounded-lg">
-                    <button
-                      type="button"
-                      onClick={() => setHeroVisualTab('studio')}
-                      className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 ${
-                        heroVisualTab === 'studio'
-                          ? 'bg-[#2563EB] text-white'
-                          : 'text-[#94A3B8] hover:text-white'
-                      }`}
-                    >
-                      Foto Produk Asli
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setHeroVisualTab('diagram')}
-                      className={`px-2.5 py-1 text-xs font-medium rounded transition-colors whitespace-nowrap shrink-0 ${
-                        heroVisualTab === 'diagram'
-                          ? 'bg-[#2563EB] text-white'
-                          : 'text-[#94A3B8] hover:text-white'
-                      }`}
-                    >
-                      Diagram Tablet
-                    </button>
-                  </div>
+                  <span className="text-xs font-mono-tabular text-[#60A5FA]">
+                    100% Original
+                  </span>
                 </div>
 
-                {heroVisualTab === 'studio' ? (
-                  <div className="relative rounded-lg overflow-hidden border border-[#1E3A8A]/60 bg-[#05070B] aspect-square shadow-[0_0_35px_rgba(37,99,235,0.2)]">
-                    <img
-                      src="/assets/aistudio/Iklan_Futuristik_MMC_Black_Blue_7d13e01e.png"
-                      alt="Kemasan Asli Black Blue MMC Tablet — Stamina, Performa, Percaya Diri"
-                      className="w-full h-full object-contain bg-[#05070B]"
-                    />
-                  </div>
-                ) : (
-                  <div className="rounded-lg border border-[#1E293B] bg-[#07090E] p-6 flex flex-col items-center justify-center aspect-square relative">
-                    <div className="w-44 h-44 animate-float-slow">
-                      <svg
-                        viewBox="0 0 240 240"
-                        className="w-full h-full drop-shadow-[0_12px_28px_rgba(37,99,235,0.35)]"
-                        aria-label="Diagram geometri tablet segi enam hitam Black Blue MMC"
-                      >
-                        <defs>
-                          <linearGradient id="tabletBody" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#1E293B" />
-                            <stop offset="45%" stopColor="#090D16" />
-                            <stop offset="100%" stopColor="#030508" />
-                          </linearGradient>
-                          <linearGradient id="cobaltRim" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#60A5FA" />
-                            <stop offset="50%" stopColor="#CBD5E1" />
-                            <stop offset="100%" stopColor="#1D4ED8" />
-                          </linearGradient>
-                        </defs>
-                        <polygon
-                          points="120,14 212,67 212,173 120,226 28,173 28,67"
-                          fill="url(#tabletBody)"
-                          stroke="url(#cobaltRim)"
-                          strokeWidth="3.5"
-                        />
-                        <polygon
-                          points="120,34 194,77 194,163 120,206 46,163 46,77"
-                          fill="none"
-                          stroke="#334155"
-                          strokeWidth="1.2"
-                          strokeDasharray="5 4"
-                        />
-                        <line
-                          x1="46"
-                          y1="120"
-                          x2="194"
-                          y2="120"
-                          stroke="#1E293B"
-                          strokeWidth="1"
-                        />
-                        <text
-                          x="120"
-                          y="108"
-                          textAnchor="middle"
-                          fill="#F8FAFC"
-                          className="font-display font-bold"
-                          fontSize="16"
-                          letterSpacing="2"
-                        >
-                          BLACK BLUE
-                        </text>
-                        <text
-                          x="120"
-                          y="138"
-                          textAnchor="middle"
-                          fill="#60A5FA"
-                          className="font-mono-tabular font-semibold"
-                          fontSize="13"
-                          letterSpacing="3"
-                        >
-                          MMC · 6 SISI
-                        </text>
-                      </svg>
-                    </div>
-                    <p className="text-xs text-[#94A3B8] text-center mt-2">
-                      Geometri 6 Sisi Presisi · Warna Hitam Pekat Khas Era 2000-an
-                    </p>
-                  </div>
-                )}
+                <div className="relative rounded-lg overflow-hidden border border-[#1E3A8A]/60 bg-[#05070B] aspect-square shadow-[0_0_35px_rgba(37,99,235,0.2)]">
+                  <img
+                    src="/assets/aistudio/Iklan_Futuristik_MMC_Black_Blue_7d13e01e.png"
+                    alt="Kemasan Asli Black Blue MMC Tablet — Stamina, Performa, Percaya Diri"
+                    className="w-full h-full object-contain bg-[#05070B]"
+                  />
+                </div>
 
                 <div className="mt-3.5 pt-3 border-t border-[#1E293B] flex items-center justify-between text-xs text-[#94A3B8]">
                   <span className="text-[#CBD5E1] font-medium">
@@ -1511,25 +1389,30 @@ export default function App() {
                 </div>
 
                 {/* Primary Order Channels: WhatsApp & Shopee */}
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <a
                     href={buildWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 text-sm font-semibold text-white bg-[#2563EB] hover:bg-[#1D4ED8] rounded-lg transition-colors whitespace-nowrap shrink-0"
+                    className="flex-1 inline-flex items-center justify-center gap-2.5 px-4 sm:px-6 py-3.5 sm:py-4 text-sm font-semibold text-white bg-[#2563EB] hover:bg-[#1D4ED8] active:bg-[#1E40AF] rounded-lg transition-all shadow-[0_4px_16px_rgba(37,99,235,0.3)] text-center group"
                   >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Pesan via WhatsApp (+62 889-8087-4055)</span>
+                    <MessageCircle className="w-5 h-5 shrink-0 text-white group-hover:scale-105 transition-transform" />
+                    <span className="flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 leading-snug">
+                      <span className="font-semibold text-white">Pesan via WhatsApp</span>
+                      <span className="text-xs font-mono-tabular font-normal text-blue-100/90">
+                        (+62 889-8087-4055)
+                      </span>
+                    </span>
                   </a>
                   <a
                     href="https://s.shopee.co.id/1qdLNuMjhs"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-4 text-sm font-semibold text-white bg-[#07090E] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors whitespace-nowrap shrink-0"
+                    className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3.5 sm:py-4 text-sm font-semibold text-white bg-[#07090E] hover:bg-[#1E293B] border border-[#334155] rounded-lg transition-colors text-center group"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#60A5FA]" />
+                    <ShoppingBag className="w-4 h-4 text-[#60A5FA] shrink-0 group-hover:scale-105 transition-transform" />
                     <span>Beli di Shopee Official</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#94A3B8]" />
+                    <ExternalLink className="w-3.5 h-3.5 text-[#94A3B8] shrink-0" />
                   </a>
                 </div>
               </div>
@@ -1608,9 +1491,10 @@ export default function App() {
                   href="https://s.shopee.co.id/1qdLNuMjhs"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#60A5FA] hover:underline"
+                  className="text-[#60A5FA] hover:underline inline-flex items-center gap-1 font-medium"
                 >
-                  s.shopee.co.id/1qdLNuMjhs
+                  <span>Kunjungi di Shopee</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </p>
               <p>Alamat: Kota Bandung 40242, Jawa Barat</p>
